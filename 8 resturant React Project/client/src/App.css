@@ -1,0 +1,644 @@
+:root {
+	--font-one: 'Cairo', sans-serif;
+	--font-two: 'Silkscreen', sans-serif;
+	--gray: #303841;
+	--light-blue: #a8e6cf;
+	--deep-blue: #45567d;
+	--ovwhite: #ffd3b6;
+	--light-red: #ffaaa5;
+	--deep-pink: #a80038;
+	--deep-brown: #2b2024;
+	--light-black: #393e46;
+	--blue-green: #4ecca3;
+	--scroll: 0;
+	--white: #fff6f6;
+	--black: #042f1a;
+	--grey: #d8d8d8;
+	--blue: #80bdea;
+	--red: #f95b77;
+	--green: #1abe71;
+	--darkgreen: #0a3f3d;
+	--lightgreen: #d4ed6d;
+	--teal: #337f7d;
+	--yellow: #ffb500;
+	--pink: #ff73b5;
+	--peach: #f8bf95;
+	--lightpeach: #fad4b8;
+	--orange: #f6aa72;
+	--cream: #fff7f3;
+	--mint: #ccdfde;
+	--color-dark: var(--black);
+	--color-light: var(--white);
+	--color-primary: var(--blue);
+	--color-secondary: var(--teal);
+	--color-success: #36ed9c;
+	--color-error: #ff3154;
+	--text-color: var(--white);
+	--link-color: inherit;
+	--link-hover: var(--red);
+	--background: var(--black);
+	--accent-color: var(--pink);
+	--button-bg: var(--pink);
+	--button-text: var(--black);
+	--button-padding: 0.2em 0.7em 0.6em 0.7em;
+	--button-radius: 4px;
+	--content-width: calc(100% - 2rem);
+	--vpad: 40px;
+	--hpad: 25px;
+	--nav-height: 80px;
+	/* Background opacity decrease with scrolling  */
+	--background-opacity: calc(100% - (1% * min(var(--scroll), 30) * 100 / 30));
+}
+/* SCrolling Start */
+.scrolling-box {
+	text-align: center;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+	background-color: var(--color-primary);
+	position: relative;
+	z-index: 10;
+}
+
+.scroll-bar {
+	overflow-x: scroll;
+	display: flex;
+	padding: 25px 0px;
+	list-style: none;
+	scroll-snap-type: x mandatory;
+	transition: all 0.5s;
+}
+.scroll-bar.active {
+	scroll-snap-type: none;
+}
+.scroll-bar .pic {
+	flex: 0 0 20%;
+	padding: 20px;
+	background: var(--white);
+	border-radius: 12px;
+	box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+	scroll-snap-align: start;
+	transition: all 0.5s;
+	margin: 0px 5px;
+	height: 140px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.scroll-bar .pic img {
+	width: 40%;
+	object-fit: cover;
+}
+
+.scroll-bar::-webkit-scrollbar {
+	height: 12px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb,
+.scroll-bar::-webkit-scrollbar-track {
+	border-radius: 92px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+	background: var(--green-dark);
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+	background: var(--grey-200);
+}
+
+/* SCrolling END */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+img {
+	width: 100%;
+	object-fit: cover;
+}
+
+ul {
+	list-style: none;
+	display: flex;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+::placeholder {
+	font-family: inherit;
+	color: var(--grey-400);
+}
+::before,
+::after,
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: var(--font-one);
+	margin: 0;
+	font-size: 16px;
+}
+
+.container {
+	width: 1300px;
+	margin: auto;
+	padding: 0px 20px;
+	/* height: 100%; */
+}
+
+.full-page {
+	height: 100vh;
+	padding: 0px 50px;
+}
+.special-text {
+	font-family: var(--font-two);
+}
+/* ..............  */
+.page-delay {
+	position: sticky;
+	top: 0;
+	translate: 0 calc(-1% * (max(var(--scroll), 25) - 25) * 100 / 75);
+	--background-opacity: calc(100% - (1% * min(var(--scroll), 30) * 100 / 30));
+}
+.page-in-the-backside {
+	transform: translate(
+		calc(-100% + (var(--scroll) * 1%)),
+		calc(-100% + (var(--scroll) * 1%))
+	);
+}
+
+/* ................. Down List  */
+.down-list {
+	padding: 8px;
+	position: relative;
+	font-weight: bold;
+}
+.down-list .arrow {
+	content: '';
+	width: 12px;
+	height: 9px;
+	display: inline-block;
+	/* background-image: url(../pics/arrow\ down.webp); */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	margin-left: 15px;
+	right: 0px;
+}
+.down-list .list {
+	/* display: none; */
+	background-color: #027ef3;
+	width: 200px;
+	min-height: 100px;
+	position: absolute;
+	right: -90px;
+	top: 100%;
+	/* z-index: 10000; */
+	border-radius: 5px;
+	opacity: 0;
+	transition: var(--transition);
+	z-index: -1;
+}
+.down-list.active .list {
+	opacity: 1;
+	z-index: 10000;
+	/* display: inline-block; */
+}
+.down-list .list .link-item {
+	display: flex;
+}
+
+/* .................... Moving Bar  */
+.div-bar .bar {
+	display: inline-block;
+	position: absolute;
+	bottom: 50px;
+	display: flex;
+	width: 100vw;
+	justify-content: space-between;
+	animation-name: bar;
+	animation-duration: 15s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+.div-bar .bar-two {
+	display: inline-block;
+	position: absolute;
+	bottom: 50px;
+	display: flex;
+	width: 100vw;
+	justify-content: space-between;
+	animation-name: bar-two;
+	animation-duration: 15s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	transform: translateX(100%);
+}
+.div-bar .bar-two .icon,
+.div-bar .bar .icon {
+	width: 100px;
+	font-size: 50px;
+	padding: 0 calc(100vw / 18);
+}
+@keyframes bar {
+	100% {
+		transform: translate(-100%);
+	}
+}
+@keyframes bar-two {
+	100% {
+		transform: translate(0%);
+	}
+}
+/* ......................... snaped scroll  */
+.marks {
+	text-align: center;
+}
+.marks .container {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+}
+
+.marks .container .scroll-bar {
+	overflow-x: scroll;
+	display: flex;
+	padding: 25px 0px;
+	list-style: none;
+	scroll-snap-type: x mandatory;
+	transition: all 0.5s;
+}
+.marks .container .scroll-bar.active {
+	scroll-snap-type: none;
+}
+.marks .container .scroll-bar .pic {
+	flex: 0 0 20%;
+	padding: 20px;
+	background: var(--white);
+	border-radius: 12px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+	scroll-snap-align: start;
+	transition: all 0.5s;
+}
+
+.marks .scroll-bar .pic img {
+	width: 40%;
+	object-fit: cover;
+}
+
+.marks .scroll-bar::-webkit-scrollbar {
+	height: 12px;
+}
+
+.marks .scroll-bar::-webkit-scrollbar-thumb,
+.marks .scroll-bar::-webkit-scrollbar-track {
+	border-radius: 92px;
+}
+
+.marks .scroll-bar::-webkit-scrollbar-thumb {
+	background: var(--green-dark);
+}
+
+.marks .scroll-bar::-webkit-scrollbar-track {
+	background: var(--grey-200);
+}
+/* *********** Start Project *****************  */
+/* *********** Start Nav *****************  */
+
+.nav {
+	display: flex;
+	height: 100px;
+	align-items: center;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	z-index: 9999;
+}
+.nav ul {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+}
+.nav ul li {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.nav ul li a {
+	font-size: 14px;
+	font-weight: bold;
+}
+.nav ul li.logo a p {
+	line-height: 22px;
+	font-size: 40px;
+	text-align: center;
+	letter-spacing: -1px;
+}
+.nav ul button {
+	padding: 8px 10px;
+	border-radius: 10px;
+	border: none;
+	font-weight: bold;
+}
+/* *********** END Nav *****************  */
+/******************* START LandingPage ******************  */
+
+.landing-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: relative;
+	background-color: var(--color-primary);
+	z-index: 10;
+}
+.landing-page .welcome-text {
+	font-size: 220px;
+	font-weight: bold;
+	line-height: 220px;
+}
+.landing-page .top-text {
+	position: relative;
+	translate: 0 150px;
+	z-index: 1;
+}
+.landing-page .bottom-text {
+	position: relative;
+	translate: 0 -150px;
+	z-index: 3;
+}
+.landing-page .img {
+	position: relative;
+	background-color: transparent;
+	z-index: 2;
+	/* width: 400px;
+	height: 400px; */
+}
+.landing-page .img img {
+	height: 380px;
+	/* width: 100%; */
+}
+
+/******************* END LandingPage ******************  */
+
+.about .left {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 70%;
+}
+.about .left .text {
+	font-size: 60px;
+	font-weight: bold;
+}
+.about .right {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 30%;
+}
+.about .right .img {
+	width: 300px;
+}
+.page-one,
+.page-two,
+.page-three {
+	display: flex;
+	position: relative;
+}
+.page-one {
+	background-color: var(--blue-green);
+	/* transform: translate(0, calc(-100% + (var(--scroll-one) * 1%))); */
+	z-index: 3;
+}
+.page-two {
+	background-color: var(--orange);
+	transform: translate(0, calc(-100% + (var(--scroll-two) * 1%)));
+	z-index: 2;
+}
+.page-three {
+	background-color: var(--light-blue);
+	transform: translate(0, calc(-100% + (var(--scroll-three) * 1%)));
+	z-index: 1;
+}
+.page-in-the-backside {
+	transform: translate(
+		calc(-100% + (var(--scroll) * 1%)),
+		calc(-100% + (var(--scroll) * 1%))
+	);
+}
+/* *********** END Project *****************  */
+/* .................... Moving Bar  */
+.footer {
+	position: relative;
+	z-index: 99999;
+	display: flex;
+	overflow-x: scroll;
+	height: 60px;
+	align-items: center;
+	background-color: var(--gray);
+	color: white;
+}
+.footer .one {
+	display: flex;
+	justify-content: space-around;
+	animation-name: bar;
+	animation-duration: 15s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	flex: 1 1 100%;
+}
+.footer .two {
+	display: flex;
+	justify-content: space-around;
+	animation-name: bar-two;
+	animation-duration: 15s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	/* transform: translateX(100%); */
+	flex: 1 1 100%;
+}
+.footer .two .cell,
+.footer .one .cell {
+	display: inline-block;
+	/* padding: 0 calc(100vw / 18); */
+	font-weight: bold;
+	/* width: calc(100vw / 9); */
+	width: 100vw;
+}
+.footer::-webkit-scrollbar {
+	height: 0px;
+}
+
+.footer::-webkit-scrollbar-thumb,
+.footer::-webkit-scrollbar-track {
+	border-radius: 92px;
+}
+
+.footer::-webkit-scrollbar-thumb {
+	background: var(--green-dark);
+}
+
+.footer::-webkit-scrollbar-track {
+	background: var(--grey-200);
+}
+@keyframes bar {
+	100% {
+		transform: translate(-100%);
+	}
+}
+@keyframes bar-two {
+	100% {
+		transform: translate(-100%);
+	}
+}
+/* ............. END ............  */
+
+.products {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+	margin: auto;
+}
+footer {
+	height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--light-black);
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+}
+.products-box {
+	/* background-color: red; */
+	padding: 30px;
+	height: 600px;
+}
+.products-nav ul {
+	list-style: none;
+	display: flex;
+	justify-content: space-evenly;
+}
+.products-grid {
+	padding: 30px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 30px;
+}
+.form {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 40px;
+	background-color: var(--green);
+}
+.form input {
+	padding: 10px 20px;
+	width: 300px;
+	background-color: black;
+	border: none;
+	outline: none;
+	color: white;
+	font-weight: bold;
+}
+.products-wrapping-box {
+	text-align: center;
+	margin: 30px;
+}
+.products-nav {
+	box-shadow: 4px 4px 12px #03030330;
+	padding: 30px;
+}
+.login-btn {
+	padding: 10px 20px;
+	background-color: var(--color-success);
+	font-weight: bold;
+	border-radius: 10px;
+	letter-spacing: 2px;
+}
+.meal-box {
+	display: flex;
+	box-shadow: 0px 1px 12px #00000042;
+}
+.meal-box .meal-img {
+	flex: 0.4;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.meal-box .details {
+	flex: 0.6;
+	font-size: 13px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	text-align: left;
+	padding: 20px;
+	color: var(--light-black);
+}
+.meal-box .details h1 {
+	text-align: center;
+	color: var(--red);
+}
+.bold {
+	font-size: 16px;
+	font-weight: bold;
+	color: #0079ff;
+}
+.cart-btn {
+	padding: 10px 20px;
+	background-color: var(--color-success);
+	font-weight: bold;
+	border-radius: 10px;
+	letter-spacing: 2px;
+	margin-top: 30px;
+	display: inline-block;
+}
+.ingredient {
+	margin-left: 10px;
+}
+.btn {
+	cursor: pointer;
+}
+.cart-wrapper {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 30px;
+	flex-direction: column;
+}
+
+.cart-wrapper .cart-box {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 30px;
+}
+.cart-element {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+.cart-element .img {
+	display: flex;
+	margin: 20px;
+}
+.cart-element .details {
+}
